@@ -69,3 +69,59 @@ jobs:
          uses: github/codeql-action/upload-sarif@v2
          with:
           sarif_file: ./apisec-results.sarif
+[![APIsec](https://github.com/DawallAZllon91/La-Pingui/actions/workflows/apisec-scan.yml/badge.svg?event=issues)](https://github.com/DawallAZllon91/La-Pingui/actions/workflows/apisec-scan.yml)
+
+            - nombre: Configurar el SDK de .NET Core
+  usos: acciones/setup-dotnet@v4.0.0
+  con:
+    # Versiones de SDK opcionales a utilizar. Si no se proporciona, instalará la versión global.json cuando esté disponible. Ejemplos: 2.2.104, 3.1, 3.1.x, 3.x, 6.0.2xx
+    versión dotnet: # opcional
+    # Calidad opcional de la construcción. Los valores posibles son: diario, firmado, validado, vista previa, ga.
+    calidad dotnet: # opcional
+    # Ubicación opcional de global.json, si su global.json no está ubicado en la raíz del repositorio.
+    archivo-json-global: # opcional
+    # Fuente de paquete opcional para configurar la autenticación. Consultará cualquier NuGet.config existente en la raíz del repositorio y proporcionará un NuGet.config temporal utilizando la variable de entorno NUGET_AUTH_TOKEN como ClearTextPassword.
+    URL de origen: # opcional
+    # PROPIETARIO opcional para usar paquetes de organizaciones/usuarios del Registro de paquetes de GitHub que no sean el propietario del repositorio actual. Solo se usa si también se proporciona una URL GPR en la URL de origen
+    propietario: # opcional
+    # Ubicación opcional de NuGet.config, si su NuGet.config no está ubicado en la raíz del repositorio.
+    archivo de configuración: # opcional
+    # Entrada opcional para habilitar el almacenamiento en caché de la carpeta de paquetes globales de NuGet
+    caché: # opcional
+    # Se utiliza para especificar la ruta a un archivo de dependencia: paquetes.lock.json. Admite comodines o una lista de nombres de archivos para almacenar en caché múltiples dependencias.
+    ruta-dependencia-caché: # opcional
+    on:
+  push:
+    branches:
+    - main
+    - release/*
+    on:
+  pull_request:
+    branches:
+    - main
+
+    jobs:
+  my_job:
+    name: deploy to staging
+    runs-on: windows-latesto o windows-2019
+  jobs:
+  test:
+    name: Test on node ${{ matrix.node_version }} and ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        node_version: ['8', '10', '12']
+        os: [ubuntu-latest, windows-latest, macOS-latest]
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Use Node.js ${{ matrix.node_version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node_version }}
+
+    - name: npm install, build and test
+      run: |
+        npm install
+        npm run build --if-present
+        npm test
